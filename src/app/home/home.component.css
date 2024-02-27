@@ -1,0 +1,36 @@
+
+  .categories-table-lable{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally and vertically within the flex container */
+
+}
+
+.new-category-button{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally and vertically within the flex container */
+    height: 80px;
+    scale: 1.5;
+}      
+.action-buttons{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    justify-content: space-around;
+    
+}
+.delete-button{
+    display: flex;
+    margin: auto;
+}
+.edit-button{
+    display: flex;
+    margin: auto;
+}
+
+.mat-elevation-z8{
+    margin: auto;
+    padding: 10px;
+}

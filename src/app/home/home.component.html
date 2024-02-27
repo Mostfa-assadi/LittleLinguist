@@ -1,0 +1,60 @@
+<!-- app.component.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+
+<body>
+  <!-- <app-edit-category></app-edit-category> -->
+  <div class="main-page">
+    <app-header></app-header>
+    <div class="categories-table-lable"><h2>Categories Table</h2></div>
+
+    <div class="categories-table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="Category Name">
+          <th mat-header-cell *matHeaderCellDef>Category Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.category_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="No. of words">
+          <th mat-header-cell *matHeaderCellDef>No. of words</th>
+          <td mat-cell *matCellDef="let element">{{ element.words_list.length }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Last edit date">
+          <th mat-header-cell *matHeaderCellDef>Last edit date</th>
+          <td mat-cell *matCellDef="let element">{{ element.last_edit_date}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element ; let i = Actions">
+            <div class="action-buttons">  
+              <div class="delete-button">
+                  <button mat-icon-button (click)="delete_category(element)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+              </div>
+              <div class="edit-button">   
+                  <button mat-icon-button  [routerLink]="['/editcategory',element.category_id]">
+                      <mat-icon>edit</mat-icon>   
+                  </button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <div class="new-category-button" routerLink="addcategory"> <button rou> New Category </button></div>
+
+    <app-footer></app-footer>
+  </div>
+</body>
+</html>

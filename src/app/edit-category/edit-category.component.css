@@ -1,0 +1,137 @@
+.words-table-lable{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally and vertically within the flex container */
+
+}
+
+.add-category-button{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally and vertically within the flex container */
+    height: 80px;
+    scale: 1.5;
+}
+.save-button{
+        margin: auto; /* Center the table by setting margin */
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Center horizontally and vertically within the flex container */
+        height: 80px;
+        scale: 1.5;
+}      
+.action-buttons{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    justify-content: space-around;
+    
+}
+.delete-button{
+    display: flex;
+    margin: auto;
+}
+
+.mat-elevation-z8{
+    margin: auto;
+ 
+    padding: 10px;
+}
+.category_details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 300px; /* Adjust the width as needed */
+  margin-left: auto; /* Move the form to the left */
+  margin-right: auto; /* Center the form horizontally */
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+
+.words-table-lable{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally and vertically within the flex container */
+
+}
+
+.add-word-button{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally and vertically within the flex container */
+    height: 80px;
+    scale: 1.5;
+}
+.save-button{
+        margin: auto; /* Center the table by setting margin */
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Center horizontally and vertically within the flex container */
+        height: 80px;
+        scale: 1.5;
+}      
+.action-buttons{
+    margin: auto; /* Center the table by setting margin */
+    display: flex;
+    justify-content: space-around;
+    
+}
+.delete-button{
+    display: flex;
+    margin: auto;
+}
+
+.mat-elevation-z8{
+    margin: auto;
+ 
+    padding: 10px;
+}
+.category_details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 300px; /* Adjust the width as needed */
+    margin-left: 0; /* Set margin-left to 0 to align to the left */
+  }
+  
+  label {
+    margin-bottom: 10px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+
+.addnewword {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-container {
+    margin-right: 10px; /* Adjust as needed */
+  }
+  
+  mat-label {
+    margin-right: 10px; /* Adjust as needed */
+  }
+  
+  .add-word-button {
+    margin-left: auto; /* Push the button to the right */
+  }
+    
