@@ -1,0 +1,24 @@
+.new-word-container {
+  display: flex;
+}
+
+.new-word-element {
+  padding-right: 8px;
+}
+
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+  background-color: #ff5733;
+
+}
+.center-content {
+  text-align: center;
+  padding: 20px; /* Add padding for better spacing */
+  background-color: #9bd9f5; /* Set the background color of the center content */
+  border-radius: 10px;
+}

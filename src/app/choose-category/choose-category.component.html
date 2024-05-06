@@ -1,0 +1,8 @@
+<div class="container">
+    <h1>Let's Play</h1>
+    <div class="categories-view-container">
+        <div *ngFor="let category of allCategories" class="category-card">
+            <app-category-card [currentCategory]="category" ></app-category-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+
+
+
+<div class="container">
+    <div class="center-content">
+        <div class="headline">
+            <h1>Word Sorter - {{this.selectedCategory.name}}</h1>
+            <app-quit-game></app-quit-game>
+            <mat-icon>monetization_on</mat-icon> {{this.points}}
+
+        </div>
+
+        <div class="question">
+            <p>Is word {{this.inOrderedWords[step].origin}} part of the {{this.selectedCategory.name}} category?</p>
+        </div>
+        <br>
+        <div class="answerButtons">
+            <button  class="yesButton" cdkFocusInitial mat-button (click)="check_answer(true)"><b>Yes</b></button>
+            <button  class="noButton" cdkFocusInitial mat-button (click)="check_answer(false)" ><b>No</b></button>
+        </div>
+        <br><br>
+
+        <div class="progressBar">
+            <mat-progress-bar mode="determinate" 
+            value="{{(this.step) / inOrderedWords.length * 100 }}"></mat-progress-bar> 
+        </div>
+        <br>
+    </div>
+</div>
+
+
+
+
+<!-- <app-quit-game></app-quit-game>
+<h1>Mixed Letters - {{this.categoryName}}</h1>
+<mat-form-field>
+
+    <mat-label> {{this.inOrderedWords[step].target}}</mat-label>
+
+    <mat-label> {{this.inOrderedWords[step].origin}}</mat-label>
+    <input matInput placeholder="answer">
+
+    <button  class="resetButton" cdkFocusInitial mat-button ><b>Reset</b></button>
+
+    <button  class="submitButton" cdkFocusInitial mat-button ><b>Submit</b></button>
+    <mat-progress-bar mode="determinate" 
+        value="{{this.progressRate}}"></mat-progress-bar> 
+    <br><br><br> 
+
+</mat-form-field> -->

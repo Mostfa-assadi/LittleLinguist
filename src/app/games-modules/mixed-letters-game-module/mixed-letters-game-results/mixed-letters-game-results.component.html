@@ -1,0 +1,41 @@
+<div class="container">
+
+    <div class="headline">
+        <h1>Word Sorter - {{passedObjects.selectedCategoryName}} - Results</h1>
+    </div>
+
+    <div class="info">
+        <p><strong>Grade:</strong> {{this.grade}}</p>
+        <p>You classified {{passedObjects.correctAnswers}} of {{passedObjects.totalAnswers}} words correctly</p>
+    </div>
+    <div *ngFor="let word of passedObjects.results" class="results-cards">
+        <div>
+            <mat-card class="result-card-container">
+                <mat-card-content class="horizontal-layout">
+                <div>
+                    Origin: {{ word[0].target }}
+                </div>
+                <div>
+                    Correct Answer: {{word[0].origin}}
+                </div>
+                <div>
+                    Guess: {{ word[0].guess }}
+
+                </div>
+                <div *ngIf="word[1]">
+                    <mat-icon>check icon</mat-icon>
+                </div>
+                <div *ngIf="!word[1]">
+                    <mat-icon>close icon</mat-icon>
+                </div>
+                
+                </mat-card-content>
+            </mat-card>
+            
+        </div>
+    </div>
+    
+    <div class="newGameButton">
+        <button class="newGameButton"  cdkFocusInitial mat-button routerLink="/choose-category" ><b>New Game</b></button>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+/* Game container styles */
+.game-container {
+     display: flex;
+    flex-direction: column;
+    background-color: #9bd9f5;
+    align-items: center;
+  }
+  
+   
+  /* Game details container styles */
+  .game-details-container {
+    border: 1px solid #ff5733;
+    border-radius: 5px;
+    padding: 10px;
+    max-width: 300px;
+  }
+  
+  .playButton-container{
+    text-align: center;
+
+  }
+/* Button styles */
+.playButton {
+    background-color: #ff5733; /* Set your desired color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 5px; /* Optional: Add border radius */
+    cursor: pointer; /* Add cursor pointer */
+    
+ }
+
+/* Button hover effect */
+.playButton:hover {
+    background-color: #ff7f50; /* Change color on hover */
+}
+
+/* Button focus outline */
+.playButton:focus {
+    outline: none; /* Remove focus outline */
+}
+  
+  /* Form field label styles */
+  .mat-form-field-label {
+    color: #333;
+  }
+  
+  /* Select styles */
+  .mat-select-trigger {
+    color: #333;
+   }
+  
+  /* Option styles */
+  .mat-option {
+    color: #333;
+  }
+  
+  /* Option hover effect */
+  .mat-option:hover {
+    background-color: #ff5733;
+  }
+  

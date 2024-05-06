@@ -1,0 +1,23 @@
+.quit-icon {
+    display: inline-block;
+}
+
+.quit-icon button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.quit-icon button:focus {
+    outline: none;
+}
+
+.quit-icon button:hover .mat-icon {
+    color: #333; /* Change color on hover */
+}
+
+.mat-icon {
+    font-size: 24px; /* Adjust icon size */
+    color: #007bff; /* Default icon color */
+}

@@ -1,0 +1,18 @@
+
+<mat-card (click)="chooseGame()" class="card-container" >
+
+    <mat-card-content>
+        <div *ngIf="wasUpdatedLastWeek()">
+                <mat-icon class="mat-icon star" >star</mat-icon>        
+        </div>
+    </mat-card-content>
+    
+    <mat-card-content>
+        {{ currentCategory.name }}
+    </mat-card-content>
+
+    <mat-card-content class="number-of-words">
+        {{currentCategory.words.length}}
+    </mat-card-content>
+
+</mat-card>

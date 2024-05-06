@@ -1,0 +1,83 @@
+/* Material card container */
+.card-container {
+    width: 300px;
+    background-color: #9bd9f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+  }
+  
+  /* Material card content */
+  .mat-card-content {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Distribute content evenly */
+    width: 100%;
+  }
+/* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust as needed */
+    background-color: #ff5733;
+
+  }
+  /* Body styles */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  /* Heading styles */
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Container styles */
+  .categories-view-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Category card styles */
+  .category-card {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Category card hover effect */
+  .category-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Category card content */
+  .category-card-content {
+    text-align: center;
+  }
+  
+  /* Category card image */
+  .category-card img {
+    max-width: 80%;
+    max-height: 80%;
+  }
+  

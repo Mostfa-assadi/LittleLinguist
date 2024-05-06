@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Little_linguist": {
+    "little-linguist": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -58,10 +58,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Little_linguist:build:production"
+              "buildTarget": "little-linguist:build:production"
             },
             "development": {
-              "buildTarget": "Little_linguist:build:development"
+              "buildTarget": "little-linguist:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -69,7 +69,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Little_linguist:build"
+            "buildTarget": "little-linguist:build"
           }
         },
         "test": {
@@ -95,6 +95,6 @@
     }
   },
   "cli": {
-    "analytics": "bd348640-be4d-4ff0-b3fc-6c7ab6027be5"
+    "analytics": false
   }
 }

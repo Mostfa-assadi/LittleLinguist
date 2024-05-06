@@ -1,0 +1,31 @@
+
+<div class="game-container">
+    <p>Choose game to play</p>
+
+    <div class="game-selection-container">
+        <mat-form-field >
+            <mat-label>Game</mat-label>
+            <mat-select  [(ngModel)]="selectedGame">
+                <mat-option *ngFor="let game of allGames" 
+                            [value]="game">
+                    {{ game.name }}
+                    
+                </mat-option>
+            </mat-select>
+        </mat-form-field>    
+    </div>
+
+    <div *ngIf="selectedGame" class="game-details-container">
+        <div>
+            <b>Difficulty:</b> {{selectedGame.difficulty}}
+        </div>
+        <div>
+           <b>Description:</b> {{selectedGame.description}}
+        </div>
+        
+        <div class="playButton-container">
+            <button  class="playButton" cdkFocusInitial mat-button [mat-dialog-close]="true"  [routerLink]="[selectedGame.gameURL, selectedCategoryId]"><b>Play</b></button>
+        </div>
+    </div>
+</div>
+

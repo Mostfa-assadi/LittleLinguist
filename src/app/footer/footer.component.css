@@ -1,16 +1,10 @@
-    
-footer{
-    margin:auto;
-    background-color: #2eb1c0;
-    color: #fff;
-    padding: 5px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
+.footer-container {
+  display: flex;
+  justify-content: right;
+  position:fixed;
+  bottom: 0;
+  width: 100%;
 }
-
-
-
-
-      
-    
+.example-spacer {
+  flex: 1 1 auto;
+}
