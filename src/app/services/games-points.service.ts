@@ -1,42 +1,39 @@
 import { Injectable, OnInit } from '@angular/core';
 import { GamePlayed } from '../../shared/model/GamePlayed';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore, Firestore, addDoc, collection, QuerySnapshot, getDocs, DocumentSnapshot } from '@angular/fire/firestore';
+import { FormsModule } from '@angular/forms';
+import { gamesPlayedConverter } from './converters/gamesPlayed-converter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GamesPointsService {
-  private readonly GAMESPLAYED_KEY = 'gamesPlayed';
-  constructor(){
-    const gamesPlayedString = localStorage.getItem(this.GAMESPLAYED_KEY);
-    if (gamesPlayedString === null) this.gamesPlayed = [];
-    else{
-      this.gamesPlayed =  JSON.parse(gamesPlayedString);
-    }
 
-  }
-  gamesPlayed : GamePlayed[] = [];
+  // private readonly GAMESPLAYED_KEY = 'gamesPlayed';
+  constructor(private firestoreService : Firestore){}
 
-  public list() : GamePlayed[]{
-    return this.gamesPlayed;
-  }
+  async list(): Promise<GamePlayed[]> {
+    const collectionConnection = collection(this.firestoreService, 'gamesPlayed').withConverter(gamesPlayedConverter);
 
+    const querySnapshot: QuerySnapshot<GamePlayed> = await getDocs(collectionConnection);
 
-  public addGamePlayed(gamePlayedToAdd : GamePlayed) : void {
-    this.gamesPlayed.push(gamePlayedToAdd);
-    const gamesPlayed = this.getGamesPlayed();
-    gamesPlayed.push(gamePlayedToAdd);
-    localStorage.setItem(this.GAMESPLAYED_KEY, JSON.stringify(gamesPlayed));
+    const result: GamePlayed[] = [];
+
+    querySnapshot.docs.forEach((docSnap: DocumentSnapshot<GamePlayed>) => {
+      const data = docSnap.data();
+      if(data){
+        result.push(data);
+      }
+    });
+    return result;
   }
 
-  private getGamesPlayed() : GamePlayed[]{
-    let gamesPlayedString = localStorage.getItem(this.GAMESPLAYED_KEY);
 
-    if (!gamesPlayedString) {
-      return [];
-    } else {
-      return JSON.parse(gamesPlayedString);
-    }
+  async addGamePlayed(gamePlayedToAdd : GamePlayed){
+    await addDoc(collection(this.firestoreService, 'gamesPlayed').withConverter(gamesPlayedConverter), gamePlayedToAdd);
   }
+
 
 
   getLowestAverageGame(gamesPlayed : GamePlayed[]) : number{

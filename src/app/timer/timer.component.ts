@@ -20,7 +20,8 @@ export class TimerComponent implements OnInit, OnDestroy{
 
   }
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    
+    clearInterval(this.timer);
   }
   ngOnInit(): void {
     this.durationAsNumber = Number(this.duration);
@@ -35,8 +36,9 @@ export class TimerComponent implements OnInit, OnDestroy{
       }
       else{
           clearInterval(this.timer);
-          this.reportTimeLeft.emit(this.durationAsNumber);
       }
+      this.reportTimeLeft.emit(this.durationAsNumber);
+
     }, 1000);
 
   }

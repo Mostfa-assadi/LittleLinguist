@@ -1,40 +1,38 @@
 import { categories } from './../../shared/data/categories';
 import { Injectable } from '@angular/core';
 import { Category } from '../../shared/model/category';
+import { DocumentSnapshot, Firestore, QuerySnapshot, addDoc, collection, getDocs } from '@angular/fire/firestore';
+import { categoriesConverter } from './converters/categories-converter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
-  private readonly CATEGORIES_KEY = 'categories';
   private readonly NEXT_ID_KEY = 'nextId';
 
-  private getCategories() : Map<number, Category>{
-    let categoriesString = localStorage.getItem(this.CATEGORIES_KEY);
+  constructor(private firestoreService : Firestore){}
 
-    if (!categoriesString) {
-      return new Map<number, Category>();
-    } else {
-      return new Map<number, Category>(JSON.parse(categoriesString));
-    }
+  async getCategories() : Promise<Map<string, Category>>{
+    const collectionConnection = collection(this.firestoreService, 'categories').withConverter(categoriesConverter);
+
+    const querySnapshot: QuerySnapshot<Category> = await getDocs(collectionConnection);
+
+    const result: Map<string, Category> = new Map<string, Category>();
+
+    querySnapshot.docs.forEach((docSnap: DocumentSnapshot<Category>) => {
+      const data = docSnap.data();
+      if(data){
+        result.set(data.id, data);
+      }
+    });
+
+    return result;
   }
 
-  private getNextId() : number {
-    let nextIdString = localStorage.getItem(this.NEXT_ID_KEY); 
 
-    return nextIdString ? parseInt(nextIdString) : 0;
-  }
 
-  private setCategories(list : Map<number, Category>) : void {
-    localStorage.setItem(this.CATEGORIES_KEY, JSON.stringify(Array.from(list)));
-  }
-
-  private setNextId(id : number) : void {
-    localStorage.setItem(this.NEXT_ID_KEY, id.toString());
-  }
-
-  list() : Category[] {
-    return Array.from(this.getCategories().values());
+  async list() : Promise<Category[]> {
+    return this.getCategories().then((result: Map<string, Category>) => (Array.from(result.values())));
   }
 
   get(id : number) : Category | undefined {
@@ -56,14 +54,8 @@ export class CategoriesService {
     this.setCategories(categoriesMap);
   }
 
-  add(category : Category) : void {
-    category.id = this.getNextId();
-    category.lastUpdateDate = new Date();
+  async add(category : Category) {
+    await addDoc(collection(this.firestoreService, 'categories').withConverter(categoriesConverter), category);
 
-    let categoriesMap = this.getCategories();
-    categoriesMap.set(category.id, category);
-
-    this.setCategories(categoriesMap);
-    this.setNextId(++category.id);
   }
 }

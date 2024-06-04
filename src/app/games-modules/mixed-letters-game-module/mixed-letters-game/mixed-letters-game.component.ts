@@ -91,7 +91,7 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
       this.points = Math.floor((this.correctAnswers) * (100 / this.categoryWords.length));
 
       if (this.step === this.categoryWords.length){
-        this.gamesPointsService.addGamePlayed(new GamePlayed(this.selectedCategory.id, 3, new Date(), this.points));
+        this.gamesPointsService.addGamePlayed(new GamePlayed(this.selectedCategory.id, 3, new Date(), this.points, 0, 0));
 
         const navigationDetails: any[] = ['/mixed-letters-game-results', JSON.stringify({results : Array.from(this.results.entries()), 
                                                     correctAnswers : this.correctAnswers, 
@@ -105,9 +105,7 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
     }
 
     
-    stopGame():void{
-      console.log('dsadasdassad')
-    }
+
     
     getMixedWord(word : string): string {
       let mixedWord = word;
