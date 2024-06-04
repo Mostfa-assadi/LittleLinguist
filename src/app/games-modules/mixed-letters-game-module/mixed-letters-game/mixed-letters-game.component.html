@@ -8,7 +8,7 @@
         <div>
             <app-quit-game></app-quit-game>
             <mat-icon>monetization_on</mat-icon> {{this.points}}
-
+            <app-timer duration={{this.gameTime}} (reportTimeLeft)="reportTimeLeftHandler($event)" > </app-timer>
         </div>
 
         <form #gameForm="ngForm" (ngSubmit)="check_answer()">

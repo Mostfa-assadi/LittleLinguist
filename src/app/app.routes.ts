@@ -9,6 +9,7 @@ import { MixedLettersGameComponent } from './games-modules/mixed-letters-game-mo
 import { WordSorterGameComponent } from './games-modules/word-sorter-game-module/word-sorter-game/word-sorter-game.component';
 import { WordSorterGameResultsComponent } from './games-modules/word-sorter-game-module/word-sorter-game-results/word-sorter-game-results.component';
 import { MixedLettersGameResultsComponent } from './games-modules/mixed-letters-game-module/mixed-letters-game-results/mixed-letters-game-results.component';
+import { TimerComponent } from './timer/timer.component';
 
 export const routes: Routes = [
     {path: "", component: DashboardPageComponent},
@@ -21,5 +22,6 @@ export const routes: Routes = [
     {path: "word-sorter-game/:categoryId", component:WordSorterGameComponent},
     {path: "mixed-letters-game/:categoryId", component:MixedLettersGameComponent},
     {path: "mixed-letters-game-results/:passedObjects", component:MixedLettersGameResultsComponent},
-    {path: "word-sorter-game-results/:passedObjects", component:WordSorterGameResultsComponent}
+    {path: "word-sorter-game-results/:passedObjects", component:WordSorterGameResultsComponent},
+    {path: "timer", component:TimerComponent}
 ];

@@ -14,22 +14,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GamePlayed } from '../../../../shared/model/GamePlayed';
 import { MatIconModule } from '@angular/material/icon';
+import { GameDifficulty } from '../../../../shared/model/GameDifficulty';
+import { TimerComponent } from "../../../timer/timer.component";
 
 @Component({
-  selector: 'app-mixed-letters-game',
-  standalone: true,
-  imports: [CommonModule, 
-            FormsModule, 
-            MatFormFieldModule,
-            MatProgressBarModule, 
-            QuitGameComponent, 
-            MatInputModule, 
-            MatIconModule],
-  templateUrl: './mixed-letters-game.component.html',
-  styleUrl: './mixed-letters-game.component.css'
+    selector: 'app-mixed-letters-game',
+    standalone: true,
+    templateUrl: './mixed-letters-game.component.html',
+    styleUrl: './mixed-letters-game.component.css',
+    imports: [CommonModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatProgressBarModule,
+        QuitGameComponent,
+        MatInputModule,
+        MatIconModule, TimerComponent]
 })
-export class MixedLettersGameComponent implements OnInit {
-  @Input()
+export class MixedLettersGameComponent implements OnInit {  @Input()
   categoryId!: string;
   selectedCategory!: Category;
   step : number = 0;
@@ -39,6 +40,8 @@ export class MixedLettersGameComponent implements OnInit {
   results: Map<TranslatedWord, boolean> = new Map<TranslatedWord, boolean>();
   correctAnswers : number = 0;
   points : number = 0;
+  difficulty: GameDifficulty = GameDifficulty.HARD
+  gameTime: string = "3";
   constructor (private categoriesService : CategoriesService, 
     private gamesPointsService : GamesPointsService, 
     private dialogService : MatDialog, 
@@ -54,12 +57,19 @@ export class MixedLettersGameComponent implements OnInit {
         this.categoryWords.forEach((word : TranslatedWord) => {
           const mixedLettersWord = this.getMixedWord(word.origin);
           this.mixedLettersWords.set(word.origin, mixedLettersWord)});
-  
+        
+
       }else{
         alert('Category was not found!');
       }
     }
 
+    reportTimeLeftHandler(timeleft: number) {
+      if (timeleft == 0){
+        console.log('stoooooooooooooop!')
+      }
+    }
+      
     check_answer(){
       const answer = this.categoryWords[this.step].guess;
       this.categoryWords[this.step].guess = answer;
@@ -92,6 +102,11 @@ export class MixedLettersGameComponent implements OnInit {
       }
 
 
+    }
+
+    
+    stopGame():void{
+      console.log('dsadasdassad')
     }
     
     getMixedWord(word : string): string {
