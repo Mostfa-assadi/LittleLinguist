@@ -97,7 +97,7 @@ export class GamesPointsService {
 
 
   getCategoriesLearnedNumber(gamesPlayed : GamePlayed[]) : number{
-    const  categoriesLearned : Set<Number> = new Set<Number>();
+    const  categoriesLearned : Set<string> = new Set<string>();
     gamesPlayed.forEach((gamePlayed : GamePlayed) => {
       if (!categoriesLearned.has(gamePlayed.categoryId)){
         categoriesLearned.add(gamePlayed.categoryId);

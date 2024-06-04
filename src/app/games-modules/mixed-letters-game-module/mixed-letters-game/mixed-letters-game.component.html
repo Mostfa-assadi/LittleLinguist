@@ -2,8 +2,10 @@
     <div class="center-content">
 
         <div class="headline">
-            <h1>Mixed Letters - {{this.selectedCategory.name}}</h1>
-
+            <div *ngIf="this.selectedCategory">
+                <h1>Mixed Letters - {{this.selectedCategory.name}}</h1>
+            </div>
+            
         </div>
         <div>
             <app-quit-game></app-quit-game>

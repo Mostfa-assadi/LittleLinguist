@@ -8,6 +8,7 @@ import { GamePlayed } from '../../shared/model/GamePlayed';
 import { GameProfile } from '../../shared/model/GameProfile';
 import { min } from 'rxjs';
 import { GamesService } from '../services/games.service';
+import { categories } from '../../shared/data/categories';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -30,15 +31,20 @@ export class DashboardPageComponent implements OnInit{
               private gamesService : GamesService) {}
   
   ngOnInit(): void {
-    const gamesPlayed = this.gamesPointsService.list();
-    this.gamesPlayedNumber = gamesPlayed.length;
+    this.gamesPointsService.list().then((gamesPlayed) => {
+      this.gamesPlayedNumber = gamesPlayed.length;
 
-    gamesPlayed.forEach((gamePlayed : GamePlayed) => this.totalPoints += gamePlayed.gamePoints);
-    this.categoriesLearnedNumber = this.gamesPointsService.getCategoriesLearnedNumber(gamesPlayed);
-    this.categoriesLeftNumber = this.categoriesService.list().length - this.categoriesLearnedNumber;
-    this.fullMarksPercentage = this.getFullMarkGamesPercentage(gamesPlayed);
-    this.gameWithLowestAverage = this.gamesService.getGameName(this.gamesPointsService.getLowestAverageGame(gamesPlayed));
-    this.gameWithHighestAverage = this.gamesService.getGameName(this.gamesPointsService.getHighestAverageGame(gamesPlayed));
+      gamesPlayed.forEach((gamePlayed : GamePlayed) => this.totalPoints += gamePlayed.gamePoints);
+      this.categoriesLearnedNumber = this.gamesPointsService.getCategoriesLearnedNumber(gamesPlayed);
+      this.categoriesService.list().then((categories) => {
+
+        this.categoriesLeftNumber = categories.length - this.categoriesLearnedNumber;
+        this.fullMarksPercentage = this.getFullMarkGamesPercentage(gamesPlayed);
+        this.gameWithLowestAverage = this.gamesService.getGameName(this.gamesPointsService.getLowestAverageGame(gamesPlayed));
+        this.gameWithHighestAverage = this.gamesService.getGameName(this.gamesPointsService.getHighestAverageGame(gamesPlayed));
+    
+      })
+    });
   }
 
 

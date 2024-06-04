@@ -1,15 +1,14 @@
 import { categories } from './../../shared/data/categories';
 import { Injectable } from '@angular/core';
 import { Category } from '../../shared/model/category';
-import { DocumentSnapshot, Firestore, QuerySnapshot, addDoc, collection, getDocs } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore, QuerySnapshot, deleteDoc, addDoc, collection, doc, getDoc, getDocs, setDoc } from '@angular/fire/firestore';
 import { categoriesConverter } from './converters/categories-converter';
+import { translatedWordConverter } from './converters/translatedWord-converter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
-  private readonly NEXT_ID_KEY = 'nextId';
-
   constructor(private firestoreService : Firestore){}
 
   async getCategories() : Promise<Map<string, Category>>{
@@ -35,27 +34,25 @@ export class CategoriesService {
     return this.getCategories().then((result: Map<string, Category>) => (Array.from(result.values())));
   }
 
-  get(id : number) : Category | undefined {
-    return this.getCategories().get(id);
+  async get(id : string) : Promise<Category | undefined> {
+    const categoryDocRef = doc(this.firestoreService, 'categories', id).withConverter(categoriesConverter);
+    return (await getDoc(categoryDocRef)).data();
   }
 
-  delete(id : number) : void {
-    let categoriesMap = this.getCategories();
-    categoriesMap.delete(id);
-    this.setCategories(categoriesMap);
+  async delete(id : string) {
+    const categoryDocRef = doc(this.firestoreService, 'categories', id).withConverter(categoriesConverter);
+    await deleteDoc(categoryDocRef)
   }
 
-  update(category : Category) : void {
-    let categoriesMap = this.getCategories();
-
-    category.lastUpdateDate = new Date();
-    categoriesMap.set(category.id, category);
-
-    this.setCategories(categoriesMap);
+  async update(category : Category) {
+    const categoryDocRef = doc(this.firestoreService, 'categories', category.id).withConverter(categoriesConverter);
+    return await setDoc(categoryDocRef, category);
   }
 
   async add(category : Category) {
-    await addDoc(collection(this.firestoreService, 'categories').withConverter(categoriesConverter), category);
+    await addDoc(collection(this.firestoreService, 'categories').withConverter(categoriesConverter), category).then((docRef) => {
+      category.id = docRef.id;
+    })
 
   }
 }

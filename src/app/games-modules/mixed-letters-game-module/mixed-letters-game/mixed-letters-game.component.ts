@@ -32,7 +32,7 @@ import { TimerComponent } from "../../../timer/timer.component";
 })
 export class MixedLettersGameComponent implements OnInit {  @Input()
   categoryId!: string;
-  selectedCategory!: Category;
+  selectedCategory!: Category | undefined;
   step : number = 0;
   categoryWords : TranslatedWord [] = [];
   mixedLettersWords : Map<string, string> = new Map<string, string>();
@@ -49,20 +49,21 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
 
     ngOnInit(): void {
       
-      const selectedCategory = this.categoriesService.get(parseInt(this.categoryId));
-      if (selectedCategory !== undefined){
-        this.selectedCategory = selectedCategory;
-        this.categoryWords = this.categoryWords.concat(this.selectedCategory.words.sort(() => 0.5 - Math.random()));
-        
-        this.categoryWords.forEach((word : TranslatedWord) => {
-          const mixedLettersWord = this.getMixedWord(word.origin);
-          this.mixedLettersWords.set(word.origin, mixedLettersWord)});
-        
+      this.categoriesService.get(this.categoryId).then((selectedCategory) => {
+        if (selectedCategory){
+          this.selectedCategory = selectedCategory;
+          this.categoryWords = this.categoryWords.concat(this.selectedCategory.words.sort(() => 0.5 - Math.random()));
+          
+          this.categoryWords.forEach((word : TranslatedWord) => {
+            const mixedLettersWord = this.getMixedWord(word.origin);
+            this.mixedLettersWords.set(word.origin, mixedLettersWord)});
+          
 
-      }else{
-        alert('Category was not found!');
-      }
+        }else{
+          alert('Category was not found!');
+        }});
     }
+
 
     reportTimeLeftHandler(timeleft: number) {
       if (timeleft == 0){
@@ -90,7 +91,7 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
       this.step++;
       this.points = Math.floor((this.correctAnswers) * (100 / this.categoryWords.length));
 
-      if (this.step === this.categoryWords.length){
+      if (this.step === this.categoryWords.length && this.selectedCategory !== undefined){
         this.gamesPointsService.addGamePlayed(new GamePlayed(this.selectedCategory.id, 3, new Date(), this.points, 0, 0));
 
         const navigationDetails: any[] = ['/mixed-letters-game-results', JSON.stringify({results : Array.from(this.results.entries()), 

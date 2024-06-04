@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslatedWord } from '../../shared/model/translated-word';
+import { categories } from '../../shared/data/categories';
 
 @Component({
   selector: 'app-category-form',
@@ -28,7 +29,7 @@ import { TranslatedWord } from '../../shared/model/translated-word';
   styleUrl: './category-form.component.css',
 })
 export class CategoryFormComponent implements OnInit { 
-  currentCategory = new Category(0,"", Language.English, Language.Hebrew);
+  currentCategory = new Category("0","", Language.English, Language.Hebrew);
   displayedColumns: string[] = ["Origin", "Target", "Actions"];
 
   @Input()
@@ -41,11 +42,13 @@ export class CategoryFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.id) {
-      let categoryData = this.categoriesService.get(parseInt(this.id)); 
+      this.categoriesService.get(this.id).then((category) => {
+        if (category) {
+          this.currentCategory = category;
+        }
+  
+      }); 
 
-      if (categoryData) {
-        this.currentCategory = categoryData;
-      }
     }
   }
 

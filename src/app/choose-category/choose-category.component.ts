@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { CategoryCardComponent } from '../category-card/category-card.component';
 import { CommonModule } from '@angular/common';
+import { categories } from '../../shared/data/categories';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ChooseCategoryComponent implements OnInit{
   constructor(private categoriesService : CategoriesService, private dialogService : MatDialog) {}
 
   ngOnInit(): void {
-    this.allCategories = this.categoriesService.list();
+    this.categoriesService.list().then((categories : Category[]) => this.allCategories = categories);
     this.creditPoints = 0;
   }
 

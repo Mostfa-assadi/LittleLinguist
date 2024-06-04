@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ResultDialogComponent } from '../../../result-dialog/result-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { categories } from '../../../../shared/data/categories';
 
 @Component({
     selector: 'app-word-sorter-game',
@@ -45,26 +46,27 @@ export class WordSorterGameComponent implements OnInit {
               private router: Router){}
   
   ngOnInit(): void {
-    const categories = this.categoriesService.list().sort(() => 0.5 - Math.random());
-    const selectedCategory = this.categoriesService.get(parseInt(this.categoryId));
-    if (selectedCategory !== undefined){
-      this.selectedCategory = selectedCategory;
-      this.inOrderedWords = this.inOrderedWords.concat(this.generateWords(selectedCategory, 3));
+    this.categoriesService.list().then((categories: Category[]) => {categories.sort(() => 0.5 - Math.random());
+      this.categoriesService.get(this.categoryId).then((selectedCategory) => {
+        if (selectedCategory){
+          this.selectedCategory = selectedCategory;
+          this.inOrderedWords = this.inOrderedWords.concat(this.generateWords(selectedCategory, 3));
 
-    }else{
-      alert('Category was not found!');
-    }
+        }else{
+          alert('Category was not found!');
+        }
 
-    for(let i = 0; i < categories.length; i++){
-      if (categories[i].id !== parseInt(this.categoryId)){
-        this.randomCategory = categories[i];
-        this.inOrderedWords = this.inOrderedWords.concat(this.generateWords(this.randomCategory, 3));
-        break;
-      }
-    }
+        for(let i = 0; i < categories.length; i++){
+          if (categories[i].id !== this.categoryId){
+            this.randomCategory = categories[i];
+            this.inOrderedWords = this.inOrderedWords.concat(this.generateWords(this.randomCategory, 3));
+            break;
+          }
+        }
 
-    this.inOrderedWords = this.inOrderedWords.sort(() => 0.5 - Math.random());
-    
+        this.inOrderedWords = this.inOrderedWords.sort(() => 0.5 - Math.random());
+    });
+    });
   }
   
 
@@ -76,7 +78,7 @@ export class WordSorterGameComponent implements OnInit {
 
   playGame() {
     let gamePoints = 0;
-    let gamePlayed : GamePlayed = new GamePlayed(parseInt(this.categoryId), 0, new Date(), gamePoints)
+    let gamePlayed : GamePlayed = new GamePlayed(this.categoryId, 0, new Date(), gamePoints, 0, 0)
     this.gamesPointsService.addGamePlayed(gamePlayed);
   }
 
@@ -117,7 +119,7 @@ export class WordSorterGameComponent implements OnInit {
     this.points = Math.floor((this.correctAnswers) * (100 / this.inOrderedWords.length));
 
     if (this.step === this.inOrderedWords.length){
-      this.gamesPointsService.addGamePlayed(new GamePlayed(this.selectedCategory.id, 4, new Date(), this.points));
+      this.gamesPointsService.addGamePlayed(new GamePlayed(this.selectedCategory.id, 4, new Date(), this.points, 0, 0));
 
       const navigationDetails: any[] = ['/word-sorter-game-results', JSON.stringify({results : Array.from(this.results.entries()), 
                                                   correctAnswers : this.correctAnswers, 

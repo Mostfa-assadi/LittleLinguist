@@ -1,6 +1,6 @@
 export class GamePlayed {
 
-    constructor(public categoryId : number, 
+    constructor(public categoryId : string, 
                 public gameId : number, 
                 public playedDate : Date, 
                 public gamePoints : number,
