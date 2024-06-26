@@ -54,7 +54,7 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
           this.selectedCategory = selectedCategory;
           this.categoryWords = this.categoryWords.concat(this.selectedCategory.words.sort(() => 0.5 - Math.random()));
           this.mixedLettersWords = new Map<string, string>(); 
-          this.gameTime = String(this.categoryWords.length * 3);
+          this.gameTime = String(this.categoryWords.length * 5);
           for(let i = 0; i < this.categoryWords.length; i++){
             let word = this.categoryWords[i].origin; 
             let mixedWord = this.mixLetters(word);
