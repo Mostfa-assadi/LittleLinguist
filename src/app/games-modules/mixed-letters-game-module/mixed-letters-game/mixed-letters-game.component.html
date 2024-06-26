@@ -2,44 +2,49 @@
     <div class="center-content">
 
         <div class="headline">
-            <div *ngIf="this.selectedCategory">
-                <h1>Mixed Letters - {{this.selectedCategory.name}}</h1>
+            <div *ngIf="selectedCategory">
+                <h1>Mixed Letters - {{ selectedCategory.name }}</h1>
             </div>
-            
         </div>
-        <div>
+
+        <div >
             <app-quit-game></app-quit-game>
-            <mat-icon>monetization_on</mat-icon> {{this.points}}
-            <app-timer duration={{this.gameTime}} (reportTimeLeft)="reportTimeLeftHandler($event)" > </app-timer>
+            <mat-icon>monetization_on</mat-icon> {{ points }}
+            <div *ngIf="gameTime">
+            <app-timer [duration]="gameTime" (reportTimeLeft)="reportTimeLeftHandler($event)"></app-timer>
+            </div>
         </div>
 
-        <form #gameForm="ngForm" (ngSubmit)="check_answer()">
-
-        <div>
-            <mat-label>{{this.categoryWords[this.step].target}}</mat-label>
-        </div>
-        <div>
-            <mat-label>{{this.mixedLettersWords.get(this.categoryWords[this.step].origin)}}</mat-label>
-        </div>
-        <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Guess: </mat-label> 
-                <input matInput  [(ngModel)]="this.categoryWords[this.step].guess" placeholder="Enter the sorted word" name="guessInput" required>
-
-                <textarea matInput  ></textarea>
-            </mat-form-field>        
-        </div>
-        <div class="buttons">
-            <button cdkFocusInitial mat-button type="reset">Reset</button>
-            <button cdkFocusInitial mat-button type="submit" >Submit</button>
-        </div>
-        <br><br>
-        <div class="progressBar">
-            <mat-progress-bar mode="determinate" 
-            value="{{(this.step) / this.categoryWords.length * 100 }}"></mat-progress-bar> 
-        </div>    
+        <!-- Use *ngIf to check if categoryWords is defined and not empty -->
+        <form *ngIf="categoryWords && categoryWords.length > 0" #gameForm="ngForm" (ngSubmit)="check_answer()">
+            <div>
+                <mat-label>{{ categoryWords[step].target }}</mat-label>
+            </div>
+            <div>
+                <mat-label>{{ mixedLettersWords.get(categoryWords[step].origin) }}</mat-label>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Guess: </mat-label>
+                    <input matInput [(ngModel)]="categoryWords[step].guess" placeholder="Enter the sorted word"
+                        name="guessInput" required>
+                    <textarea matInput></textarea>
+                </mat-form-field>
+            </div>
+            <div class="buttons">
+                <button cdkFocusInitial mat-button type="reset">Reset</button>
+                <button cdkFocusInitial mat-button type="submit">Submit</button>
+            </div>
+            <br><br>
+            <div class="progressBar">
+                <mat-progress-bar mode="determinate" [value]="(step + 1) / categoryWords.length * 100"></mat-progress-bar>
+            </div>
         </form>
+
+        <!-- Show loading indicator or message while categoryWords is loading -->
+        <div *ngIf="!categoryWords || categoryWords.length === 0">
+            <p>Loading category words...</p>
+        </div>
+
     </div>
-</div>    
-
-
+</div>

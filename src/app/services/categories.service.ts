@@ -36,7 +36,8 @@ export class CategoriesService {
 
   async get(id : string) : Promise<Category | undefined> {
     const categoryDocRef = doc(this.firestoreService, 'categories', id).withConverter(categoriesConverter);
-    return (await getDoc(categoryDocRef)).data();
+    let data =  (await getDoc(categoryDocRef)).data();
+    return data;
   }
 
   async delete(id : string) {
@@ -50,9 +51,10 @@ export class CategoriesService {
   }
 
   async add(category : Category) {
+    
     await addDoc(collection(this.firestoreService, 'categories').withConverter(categoriesConverter), category).then((docRef) => {
       category.id = docRef.id;
-    })
+    });
 
   }
 }

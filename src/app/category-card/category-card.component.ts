@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Category } from '../../shared/model/category';
@@ -13,7 +13,7 @@ import { ChooseGameDialogComponent } from '../choose-game-dialog/choose-game-dia
   templateUrl: './category-card.component.html',
   styleUrl: './category-card.component.css'
 })
-export class CategoryCardComponent {
+export class CategoryCardComponent{
   @Input()
   currentCategory! : Category;
 

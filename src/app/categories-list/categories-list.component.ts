@@ -22,7 +22,7 @@ import { DeleteCategoryDialogComponent } from '../delete-category-dialog/delete-
 export class CategoriesListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'numOfWords', 'lastUpdateDate', 'actions'];
   dataSource : Category[] = [];
-
+  
   constructor(private categoriesService : CategoriesService, private dialogService : MatDialog) {}
 
   ngOnInit(): void {
@@ -30,7 +30,7 @@ export class CategoriesListComponent implements OnInit {
       this.dataSource = categories;
     });
   }
-
+  
   deleteCategory(id : string, name: string) {
     let dialogRef = this.dialogService.open(DeleteCategoryDialogComponent, {data: name});
 

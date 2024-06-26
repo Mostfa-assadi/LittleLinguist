@@ -25,6 +25,9 @@ export class DashboardPageComponent implements OnInit{
   fullMarksPercentage: string = "";
   gameWithLowestAverage : string = "";
   gameWithHighestAverage : string = "";
+  averageGameDuration: string = "";
+  hoursPlayed: string = "";
+  completedGamesPercentage: string = "";
 
   constructor(private gamesPointsService : GamesPointsService, 
               private categoriesService : CategoriesService,
@@ -33,8 +36,22 @@ export class DashboardPageComponent implements OnInit{
   ngOnInit(): void {
     this.gamesPointsService.list().then((gamesPlayed) => {
       this.gamesPlayedNumber = gamesPlayed.length;
-
-      gamesPlayed.forEach((gamePlayed : GamePlayed) => this.totalPoints += gamePlayed.gamePoints);
+      
+      let secondsPlayed = 0;
+      let completedGamesNumber = 0;
+      gamesPlayed.forEach((gamePlayed : GamePlayed) => {
+                                                        this.totalPoints += gamePlayed.gamePoints;
+                                                        secondsPlayed += gamePlayed.secondsPlayed;
+                                                        if (gamePlayed.secondsLeftInGame > 0) completedGamesNumber += 1;
+                                                      });
+      this.hoursPlayed = String((secondsPlayed / (60 * 60)).toFixed(2));
+      if (gamesPlayed.length > 0){
+        this.completedGamesPercentage = String((completedGamesNumber / gamesPlayed.length).toFixed(2))+ '%';
+        this.averageGameDuration = String(((secondsPlayed/60)/gamesPlayed.length).toFixed(2));
+      }else{
+        this.completedGamesPercentage = '~';
+        this.averageGameDuration =  '~';
+      }
       this.categoriesLearnedNumber = this.gamesPointsService.getCategoriesLearnedNumber(gamesPlayed);
       this.categoriesService.list().then((categories) => {
 
@@ -42,7 +59,7 @@ export class DashboardPageComponent implements OnInit{
         this.fullMarksPercentage = this.getFullMarkGamesPercentage(gamesPlayed);
         this.gameWithLowestAverage = this.gamesService.getGameName(this.gamesPointsService.getLowestAverageGame(gamesPlayed));
         this.gameWithHighestAverage = this.gamesService.getGameName(this.gamesPointsService.getHighestAverageGame(gamesPlayed));
-    
+        
       })
     });
   }

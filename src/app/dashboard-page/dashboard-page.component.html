@@ -82,6 +82,39 @@
             </mat-card-content>
 
         </mat-card>
+        <mat-card  class="card-container" >
+
+            <mat-card-content class="hours-played">
+                <strong>{{this.hoursPlayed}}</strong>
+            </mat-card-content>
+            
+            <mat-card-content class="card-name">
+                Hours Played
+            </mat-card-content>
+
+        </mat-card>
+        <mat-card  class="card-container" >
+
+            <mat-card-content class="hours-played">
+                <strong>{{this.averageGameDuration}}m</strong>
+            </mat-card-content>
+            
+            <mat-card-content class="card-name">
+                Average Game Duration
+            </mat-card-content>
+
+        </mat-card>
+        <mat-card  class="card-container" >
+
+            <mat-card-content class="completedGames">
+                <strong>{{this.completedGamesPercentage}}</strong>
+            </mat-card-content>
+            
+            <mat-card-content class="card-name">
+                Game Completed on Time
+            </mat-card-content>
+
+        </mat-card>
 
     </div>
 </div>

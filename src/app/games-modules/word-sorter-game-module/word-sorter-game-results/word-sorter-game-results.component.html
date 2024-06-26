@@ -17,10 +17,17 @@
                 </div>
                 <div>
                 </div>
-                <div *ngIf="word[1]">
+                <div *ngIf="word[1] && word[0].guess === 'NO'">
+                    Category: {{ passedObjects.randomCategoryName }}
+                </div>
+                <div *ngIf="word[1] && word[0].guess === 'YES'">
                     Category: {{ passedObjects.selectedCategoryName }}
                 </div>
-                <div *ngIf="!word[1]">
+
+                <div *ngIf="!word[1] && word[0].guess === 'NO'">
+                    Category: {{ passedObjects.selectedCategoryName }}
+                </div>
+                <div *ngIf="!word[1] && word[0].guess === 'YES'">
                     Category: {{ passedObjects.randomCategoryName }}
                 </div>
 

@@ -20,8 +20,9 @@ export class TimerComponent implements OnInit, OnDestroy{
 
   }
   ngOnDestroy(): void {
-    
-    clearInterval(this.timer);
+    if (this.timer){
+      clearInterval(this.timer);
+    }
   }
   ngOnInit(): void {
     this.durationAsNumber = Number(this.duration);

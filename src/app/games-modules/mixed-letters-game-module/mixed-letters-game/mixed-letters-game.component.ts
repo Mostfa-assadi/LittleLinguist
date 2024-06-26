@@ -32,16 +32,16 @@ import { TimerComponent } from "../../../timer/timer.component";
 })
 export class MixedLettersGameComponent implements OnInit {  @Input()
   categoryId!: string;
-  selectedCategory!: Category | undefined;
+  selectedCategory!: Category;
   step : number = 0;
-  categoryWords : TranslatedWord [] = [];
+  categoryWords: TranslatedWord[] = [];
   mixedLettersWords : Map<string, string> = new Map<string, string>();
   answer!: string;
   results: Map<TranslatedWord, boolean> = new Map<TranslatedWord, boolean>();
   correctAnswers : number = 0;
   points : number = 0;
-  difficulty: GameDifficulty = GameDifficulty.HARD
-  gameTime: string = "3";
+  gameTime!: string ;
+  timeLeft!: number;
   constructor (private categoriesService : CategoriesService, 
     private gamesPointsService : GamesPointsService, 
     private dialogService : MatDialog, 
@@ -53,12 +53,15 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
         if (selectedCategory){
           this.selectedCategory = selectedCategory;
           this.categoryWords = this.categoryWords.concat(this.selectedCategory.words.sort(() => 0.5 - Math.random()));
-          
-          this.categoryWords.forEach((word : TranslatedWord) => {
-            const mixedLettersWord = this.getMixedWord(word.origin);
-            this.mixedLettersWords.set(word.origin, mixedLettersWord)});
-          
+          this.mixedLettersWords = new Map<string, string>(); 
+          this.gameTime = String(this.categoryWords.length * 3);
+          for(let i = 0; i < this.categoryWords.length; i++){
+            let word = this.categoryWords[i].origin; 
+            let mixedWord = this.mixLetters(word);
+            while(mixedWord === word) mixedWord = this.mixLetters(word);
+            this.mixedLettersWords.set(word, mixedWord);
 
+          }
         }else{
           alert('Category was not found!');
         }});
@@ -67,7 +70,16 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
 
     reportTimeLeftHandler(timeleft: number) {
       if (timeleft == 0){
-        console.log('stoooooooooooooop!')
+        alert('Time out!');
+        this.gamesPointsService.addGamePlayed(new GamePlayed(this.selectedCategory.id, 3, new Date(), this.points, 0, new Number(this.gameTime).valueOf()));
+
+        const navigationDetails: any[] = ['/mixed-letters-game-results', JSON.stringify({results : Array.from(this.results.entries()), 
+                                                    correctAnswers : this.correctAnswers, 
+                                                    totalAnswers: this.categoryWords.length, 
+                                                    selectedCategoryName : this.selectedCategory.name})];
+        this.router.navigate(navigationDetails);
+      }else{
+        this.timeLeft = timeleft;
       }
     }
       
@@ -92,7 +104,7 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
       this.points = Math.floor((this.correctAnswers) * (100 / this.categoryWords.length));
 
       if (this.step === this.categoryWords.length && this.selectedCategory !== undefined){
-        this.gamesPointsService.addGamePlayed(new GamePlayed(this.selectedCategory.id, 3, new Date(), this.points, 0, 0));
+        this.gamesPointsService.addGamePlayed(new GamePlayed(this.selectedCategory.id, 3, new Date(), this.points, this.timeLeft, new Number(this.gameTime).valueOf() - this.timeLeft));
 
         const navigationDetails: any[] = ['/mixed-letters-game-results', JSON.stringify({results : Array.from(this.results.entries()), 
                                                     correctAnswers : this.correctAnswers, 
@@ -105,13 +117,20 @@ export class MixedLettersGameComponent implements OnInit {  @Input()
 
     }
 
-    
+    mixLetters(word : string): string{
+      let chars = word.split('');
+
+      for (let i = chars.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [chars[i], chars[j]] = [chars[j], chars[i]];
+      }
+      
+      // Join the shuffled array back into a string
+      return chars.join('');
+
+
+    }
 
     
-    getMixedWord(word : string): string {
-      let mixedWord = word;
-      while(mixedWord.replaceAll(' ', '') === word) mixedWord = word.split('').sort(()=> 0.5 - Math.random()).join(' ');
-      return mixedWord;
-    }
   
 }

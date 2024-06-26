@@ -1,0 +1,9 @@
+.div-1 {
+    background-color: #FBD603;
+    max-width: 30%; /* Adjust the value as per your requirement */
+    /* Optionally, you can also add padding or margin to control spacing */
+    padding: 10px;
+    margin: 0 auto; /* Centers the element horizontally */
+    /* Prevents the element from exceeding the width of its container */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+}

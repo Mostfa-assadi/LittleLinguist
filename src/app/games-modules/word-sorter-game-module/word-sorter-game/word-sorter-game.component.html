@@ -3,16 +3,24 @@
 
 <div class="container">
     <div class="center-content">
-        <div class="headline">
-            <h1>Word Sorter - {{this.selectedCategory.name}}</h1>
+        <div class="headline" *ngIf="selectedCategory">
+            <h1>Word Sorter - {{selectedCategory.name}}</h1>
             <app-quit-game></app-quit-game>
-            <mat-icon>monetization_on</mat-icon> {{this.points}}
-
+            <mat-icon>monetization_on</mat-icon> {{points}}
+            <div *ngIf="gameTime">
+                <app-timer [duration]="gameTime" (reportTimeLeft)="reportTimeLeftHandler($event)"></app-timer>
+                </div>
         </div>
 
-        <div class="question">
-            <p>Is word {{this.inOrderedWords[step].origin}} part of the {{this.selectedCategory.name}} category?</p>
+
+        <div class="question" *ngIf="inOrderedWords && inOrderedWords.length > 0 && selectedCategory && inOrderedWords.length > step">
+            <p>Is word {{inOrderedWords[step].origin}} part of the {{selectedCategory.name}} category?</p>
         </div>
+        <!-- Show loading indicator or message while categoryWords is loading -->
+        <div *ngIf="!inOrderedWords || inOrderedWords.length === 0 || ! selectedCategory">
+            <p>Loading category words...</p>
+        </div>
+        
         <br>
         <div class="answerButtons">
             <button  class="yesButton" cdkFocusInitial mat-button (click)="check_answer(true)"><b>Yes</b></button>
@@ -22,29 +30,8 @@
 
         <div class="progressBar">
             <mat-progress-bar mode="determinate" 
-            value="{{(this.step) / inOrderedWords.length * 100 }}"></mat-progress-bar> 
+            value="{{(step) / inOrderedWords.length * 100 }}"></mat-progress-bar> 
         </div>
         <br>
     </div>
 </div>
-
-
-
-
-<!-- <app-quit-game></app-quit-game>
-<h1>Mixed Letters - {{this.categoryName}}</h1>
-<mat-form-field>
-
-    <mat-label> {{this.inOrderedWords[step].target}}</mat-label>
-
-    <mat-label> {{this.inOrderedWords[step].origin}}</mat-label>
-    <input matInput placeholder="answer">
-
-    <button  class="resetButton" cdkFocusInitial mat-button ><b>Reset</b></button>
-
-    <button  class="submitButton" cdkFocusInitial mat-button ><b>Submit</b></button>
-    <mat-progress-bar mode="determinate" 
-        value="{{this.progressRate}}"></mat-progress-bar> 
-    <br><br><br> 
-
-</mat-form-field> -->
